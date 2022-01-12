@@ -7,19 +7,22 @@ def xor(val1, val2):
       result += '0'
     else:
       result += '1'
-  return result
+  return result[1:]
 
 def binary_division(modified_dataword, divisor, dataword):
   track = len(divisor)
   currval = modified_dataword[:len(divisor)]
   while track < len(modified_dataword):
     if currval[0] == '0':
-      currval = xor(currval, '0'*len(divisor))
+      currval = xor(currval, '0'*len(divisor)) + modified_dataword[track]
     else:
-      currval = xor(currval, divisor)
-    currval = currval[1:] + '0'
+      currval = xor(currval, divisor) + modified_dataword[track]
     track += 1
-  return currval[1:]
+  if currval[0] == '0':
+    currval = xor(currval, '0'*len(divisor)) 
+  else:
+    currval = xor(currval, divisor)
+  return currval
 
 def main():
   dataword = input('enter dataword: ')
